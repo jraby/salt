@@ -3464,6 +3464,10 @@ def get_managed(
                              ).format(template)
 
         if data['result']:
+            with open(data['data']) as f:
+                log.info('get_manage data lines:')
+                for l in f:
+                    log.info(l)
             sfn = data['data']
             hsum = get_hash(sfn)
             source_sum = {'hash_type': 'sha256',

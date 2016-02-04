@@ -678,6 +678,7 @@ class Client(object):
             log.error('Attempted to render template with unavailable engine '
                       '{0}'.format(template))
             return ''
+        log.info('get_template data: %s', data)
         if not data['result']:
             # Failed to render the template
             log.error(

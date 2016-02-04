@@ -3457,6 +3457,8 @@ def get_managed(
                 grains=__grains__,
                 opts=__opts__,
                 **kwargs)
+
+            log.info('file get_managed data: %s', data)
         else:
             return sfn, {}, ('Specified template format {0} is not supported'
                              ).format(template)
@@ -3702,6 +3704,7 @@ def check_managed(
         if comments:
             __clean_tmp(sfn)
             return False, comments
+    log.info('check managed sfn: %s', sfn)
     changes = check_file_meta(name, sfn, source, source_sum, user,
                               group, mode, saltenv, contents)
     __clean_tmp(sfn)

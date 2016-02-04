@@ -734,6 +734,7 @@ def _get_template_texts(source_list=None,
             return _error(ret, msg)
 
     ret['data'] = txtl
+    log.info('_get_template_texts ret: %s', ret)
     return ret
 
 

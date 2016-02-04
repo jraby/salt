@@ -93,6 +93,7 @@ def compile_template(template,
             render_kwargs['argline'] = argline
         start = time.time()
         ret = render(input_data, saltenv, sls, **render_kwargs)
+        log.info('ret: (%s) %s', render, ret)
         log.profile(
             'Time (in seconds) to render \'{0}\' using \'{1}\' renderer: {2}'.format(
                 template,
@@ -104,19 +105,19 @@ def compile_template(template,
             # The file is empty or is being written elsewhere
             time.sleep(0.01)
             ret = render(input_data, saltenv, sls, **render_kwargs)
+            log.info('ret: (%s) %s', render, ret)
         input_data = ret
-        if log.isEnabledFor(logging.GARBAGE):  # pylint: disable=no-member
-            try:
-                log.debug('Rendered data from file: {0}:\n{1}'.format(
-                    template,
-                    ret.read()))
-                ret.seek(0)
-            except Exception:
-                # ret is not a StringIO, which means it was rendered using
-                # yaml, mako, or another engine which renders to a data
-                # structure. We don't want to log this, so ignore this
-                # exception.
-                pass
+        try:
+            log.info('Rendered data from file: {0}:\n{1}'.format(
+                template,
+                ret.read()))
+            ret.seek(0)
+        except Exception:
+            # ret is not a StringIO, which means it was rendered using
+            # yaml, mako, or another engine which renders to a data
+            # structure. We don't want to log this, so ignore this
+            # exception.
+            pass
     return ret
 
 

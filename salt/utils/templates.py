@@ -361,9 +361,11 @@ def render_jinja_tmpl(tmplstr, context, tmplpath=None):
         decoded_context[key] = salt.utils.locales.sdecode(value)
 
     try:
+        log.info('template string: %s', tmplstr)
         template = jinja_env.from_string(tmplstr)
         template.globals.update(decoded_context)
         output = template.render(**decoded_context)
+        log.info('output: %s', output)
     except jinja2.exceptions.TemplateSyntaxError as exc:
         trace = traceback.extract_tb(sys.exc_info()[2])
         line, out = _get_jinja_error(trace, context=decoded_context)
